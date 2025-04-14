@@ -4,18 +4,15 @@ import Link from "next/link";
 import {
   Menu,
   X,
-  TrendingUp,
   UploadIcon,
   UserCircle,
   LogOut,
   HomeIcon,
   Info,
-  Library,
   Code2Icon,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { googleLogin } from "@/lib/auth";
-import { desc } from "framer-motion/client";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

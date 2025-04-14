@@ -1,4 +1,3 @@
-import SearchBar from '../components/SearchBar';
 import PlatformTabs from '../components/PlatformTabs';
 
 export default function Home() {

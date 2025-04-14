@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ThumbsUp, Edit2Icon, TrashIcon } from "lucide-react";
+import { Edit2Icon, TrashIcon } from "lucide-react";
 
 type Props = {
   _id: string;

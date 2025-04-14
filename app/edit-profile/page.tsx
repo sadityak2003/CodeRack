@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function EditProfilePage() {
   const router = useRouter();
@@ -33,7 +34,7 @@ export default function EditProfilePage() {
     }
   }, []);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const updatedProfile = {
@@ -79,7 +80,7 @@ export default function EditProfilePage() {
           <div>
             <label className="block mb-1 text-sm">Profile Photo</label>
             <div className="flex items-center gap-4">
-              <img
+              <Image
                 src={avatarUrl}
                 alt="Preview"
                 className="w-16 h-16 rounded-full object-cover border border-gray-700"
