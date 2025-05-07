@@ -1,15 +1,14 @@
-// app/api/solution/all/route.ts
 import dbConnect from "@/lib/db";
 import Solution from "@/models/Solution";
 import { NextResponse } from "next/server";
+// Import the User model directly instead of using require()
+import "@/models/User";
 
 export async function GET() {
   try {
     await dbConnect();
-
-    // Force load the User model
-    require("@/models/User");
     
+    // Models are automatically loaded when imported
     const solutions = await Solution.find({}).populate("contributor").sort({ createdAt: -1 });
 
     if (!solutions || solutions.length === 0) {
