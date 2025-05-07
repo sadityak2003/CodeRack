@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import DefaultAvatar from "../public/images/google.png";
-import Image from "next/image";
+
 import {
   Menu,
   X,

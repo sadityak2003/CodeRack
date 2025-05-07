@@ -224,7 +224,7 @@ export default function SolutionCard({
           <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full animate-in fade-in duration-300">
             <h3 className="text-xl font-bold text-gray-800 mb-4">Delete Solution</h3>
             <p className="text-gray-600 mb-6">
-              Are you sure you want to delete "{title}"? This action cannot be undone.
+              Are you sure you want to delete {title}? This action cannot be undone.
             </p>
             <div className="flex justify-end gap-3 mt-6">
               <button

@@ -47,7 +47,6 @@ export default function UserProfilePage() {
       return;
     }
 
-    const userData = JSON.parse(local);
 
     const fetchUser = async () => {
       try {

@@ -109,7 +109,7 @@ export default function UploadPage() {
     }
   };
 
-  if (!user) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
         <BlinkBlur size="small" color={["#ffb500", "#00ff36", "#004aff", "#ff00c9"]} />{" "}
@@ -134,11 +134,11 @@ export default function UploadPage() {
           reinforcing your own knowledge and building a strong portfolio of
           work. <br />
           <br />
-          🌱 Let's grow together, inspire others, and make education accessible
+          🌱 Lets grow together, inspire others, and make education accessible
           for everyone! <br />
           <br />
           🔥 Every contribution you make brings someone closer to success — and
-          that's a legacy worth building.
+          thats a legacy worth building.
         </p>
       </div>
 

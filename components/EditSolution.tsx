@@ -134,7 +134,7 @@ export default function EditSolutionPage() {
           <br />
           <br />
           🖋️ So take a moment to explain your approach, your thinking, and any
-          tricky parts — you're building not just solutions, but understanding!
+          tricky parts — you are building not just solutions, but understanding!
           🤝
         </p>
       </div>
