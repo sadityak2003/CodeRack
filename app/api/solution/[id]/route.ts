@@ -4,7 +4,7 @@ import Solution from "@/models/Solution";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } } }
+  { params }: { params: { id: string } }
 ) {
   try {
     await dbConnect();
