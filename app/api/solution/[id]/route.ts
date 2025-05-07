@@ -3,12 +3,14 @@ import dbConnect from "@/lib/db";
 import Solution from "@/models/Solution";
 
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: { id: string } } }
 ) {
-  await dbConnect();
   try {
-    const id = params.id;
+    await dbConnect();
+    
+    const { id } = params;
+    
     const solution = await Solution.findById(id);
     
     if (!solution) {
@@ -22,10 +24,12 @@ export async function GET(
   }
 }
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(
+  req: NextRequest,
+   { params }: { params: { id: string } }) {
   await dbConnect();
   try {
-    const { id } = await params;
+    const { id } = params;
     const data = await req.json();
     const updated = await Solution.findByIdAndUpdate(id, data, { new: true });
     if (!updated) return NextResponse.json({ status: 400 });
