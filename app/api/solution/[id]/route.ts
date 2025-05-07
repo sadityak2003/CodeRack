@@ -2,12 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Solution from "@/models/Solution";
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   await dbConnect();
   try {
-    const { id } = await params;
+    const id = params.id;
     const solution = await Solution.findById(id);
-    if (!solution) return NextResponse.json({ status: 404 });
+    
+    if (!solution) {
+      return NextResponse.json({ error: "Solution not found" }, { status: 404 });
+    }
+    
     return NextResponse.json(solution);
   } catch (error) {
     console.error("Error fetching solution:", error);
