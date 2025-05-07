@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 export default function EditProfilePage() {
   const router = useRouter();
@@ -19,6 +18,7 @@ export default function EditProfilePage() {
   // Load user data from localStorage
   useEffect(() => {
     const stored = localStorage.getItem("user");
+    console.log(stored, "stored");
     if (stored) {
       const user = JSON.parse(stored);
       setEmail(user.email || "");
@@ -73,18 +73,21 @@ export default function EditProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white px-6 py-10">
-      <div className="max-w-xl mx-auto bg-gray-900 p-8 rounded-lg shadow-md">
+    <div className="min-h-screen bg-gray-200 px-6 py-10">
+      <div className="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-xl">
         <h1 className="text-2xl font-bold mb-6 text-center">Edit Profile</h1>
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="block mb-1 text-sm">Profile Photo</label>
             <div className="flex items-center gap-4">
-              <Image
-                src={avatarUrl}
-                alt="Preview"
-                className="w-16 h-16 rounded-full object-cover border border-gray-700"
-              />
+              {avatarUrl && (
+                <img
+                  src={avatarUrl}
+                  alt="Preview"
+                  className="w-16 h-16 rounded-full object-cover border border-gray-700"
+                />
+              )}
+
               <input
                 type="file"
                 accept="image/*"
@@ -98,7 +101,7 @@ export default function EditProfilePage() {
                     reader.readAsDataURL(file);
                   }
                 }}
-                className="text-sm bg-gray-800 text-white file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+                className="text-sm bg-gray-500 text-white file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
               />
             </div>
           </div>
@@ -109,7 +112,7 @@ export default function EditProfilePage() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full p-3 rounded bg-gray-800 text-white border border-gray-700"
+              className="w-full p-2 rounded bg-gray-200 text-gray-600 border border-gray-700"
             />
           </div>
 
@@ -119,7 +122,7 @@ export default function EditProfilePage() {
               type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full p-3 rounded bg-gray-800 text-white border border-gray-700"
+              className="w-full p-2 rounded bg-gray-200 text-gray-600 border border-gray-700"
             />
           </div>
 
@@ -129,7 +132,7 @@ export default function EditProfilePage() {
               type="text"
               value={leetcode}
               onChange={(e) => setLeetcode(e.target.value)}
-              className="w-full p-3 rounded bg-gray-800 text-white border border-gray-700"
+              className="w-full p-2 rounded bg-gray-200 text-gray-600 border border-gray-700"
             />
           </div>
 
@@ -139,7 +142,7 @@ export default function EditProfilePage() {
               type="text"
               value={gfg}
               onChange={(e) => setGFG(e.target.value)}
-              className="w-full p-3 rounded bg-gray-800 text-white border border-gray-700"
+              className="w-full p-2 rounded bg-gray-200 text-gray-600 border border-gray-700"
             />
           </div>
 
@@ -149,7 +152,7 @@ export default function EditProfilePage() {
               type="text"
               value={github}
               onChange={(e) => setGitHub(e.target.value)}
-              className="w-full p-3 rounded bg-gray-800 text-white border border-gray-700"
+              className="w-full p-2 rounded bg-gray-200 text-gray-600 border border-gray-700"
             />
           </div>
 
@@ -159,13 +162,13 @@ export default function EditProfilePage() {
               type="text"
               value={linkedin}
               onChange={(e) => setLinkedIn(e.target.value)}
-              className="w-full p-3 rounded bg-gray-800 text-white border border-gray-700"
+              className="w-full p-2 rounded bg-gray-200 text-gray-600 border border-gray-700"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full mt-4 bg-blue-600 hover:bg-blue-700 transition py-2 rounded text-white font-semibold"
+            className="w-full mt-4 bg-blue-500 hover:bg-blue-700 transition py-2 rounded text-white font-semibold cursor-pointer"
           >
             Save Changes
           </button>

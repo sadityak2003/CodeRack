@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import DefaultAvatar from "../public/images/google.png";
+import Image from "next/image";
 import {
   Menu,
   X,
@@ -14,11 +16,18 @@ import {
 import { motion } from "framer-motion";
 import { googleLogin } from "@/lib/auth";
 
+interface User {
+  displayName: string;
+  email: string;
+  photoURL: string;
+  uid?: string;
+}
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const libraryMenuRef = useRef<HTMLDivElement>(null);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   const handleSignIn = async () => {
@@ -41,7 +50,7 @@ export default function Navbar() {
       });
 
       localStorage.setItem("user", JSON.stringify(user));
-      setUser(user);
+      setUser(user as User);
       setIsSignedIn(true);
     }
   };
@@ -85,17 +94,22 @@ export default function Navbar() {
   /*const imageURL = "https://img.freepik.com/premium-vector/vector-colorful-logo-design_1002026-45.jpg";
   */
   return (
-    <nav className="flex items-center justify-between px-8 py-2 bg-gray-900 text-white border-b border-gray-500">
+    <nav className="flex items-center justify-between px-8 py-2 bg-white text-gray-900 border-b border-gray-500">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex justify-between items-center gap-2">
           <Code2Icon size={20}></Code2Icon>
-          <span className="text-xl text-gray-300 font-bold">Code Rack</span>
+          <span className="text-xl text-gray-900 font-bold">Coding Geeks</span>
         </div>
 
-        <ul className="hidden md:flex space-x-6 text-sm text-gray-400">
+        <ul className="hidden md:flex space-x-6 text-sm text-gray-500">
           <li>
             <Link href="/" className="hover:text-amber-500 transition-all duration-200">
               Home
+            </Link>
+          </li>
+          <li>
+            <Link href="/solutions" className="hover:text-amber-500 transition-all duration-200">
+              Solutions
             </Link>
           </li>
           <li>
@@ -105,14 +119,19 @@ export default function Navbar() {
           </li>
         </ul>
 
-        {isSignedIn ? (
+        {isSignedIn && user ? (
           <div className="hidden md:block relative">
             <button onClick={() => setIsProfileOpen(!isProfileOpen)}>
-              <img
-                src={user.photoURL}
-                alt="Profile"
-                className="w-10 h-10 rounded-full cursor-pointer"
-              />
+              <div className="relative w-10 h-10">
+                <img
+                  src={user.photoURL || ""}
+                  alt="Profile"
+                  className="rounded-full object-cover cursor-pointer"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = DefaultAvatar.src;
+                  }}
+                />
+              </div>
             </button>
             <div className="relative" ref={libraryMenuRef}>
               {isProfileOpen && (
@@ -120,29 +139,35 @@ export default function Navbar() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="absolute right-0 mt-4 w-60 border-gray-500 border-1 bg-gray-900 shadow-lg rounded-lg p-4"
+                  className="absolute right-0 mt-4 w-60 border-gray-500 border-1 bg-white shadow-lg rounded-lg p-4 z-50"
                 >
-                  <div className="flex items-center space-x-3 border-b border-gray-500 mb-2 pb-2">
+                  <div className="flex items-center space-x-3 border-b border-gray-400 mb-2 pb-2">
+                    <div className="relative w-10 h-10">
                     <img
-                      src={user.photoURL}
-                      className="w-10 h-10 rounded-full"
-                    />
+                  src={user.photoURL || ""}
+                  alt="Profile"
+                  className="rounded-full object-cover cursor-pointer"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = DefaultAvatar.src;
+                  }}
+                />
+                    </div>
                     <div className="flex flex-col items-start">
                       <span className="text-sm text-gray font-bold">
                         {user.displayName}
                       </span>
-                      <span className="text-xs text-gray-300">
+                      <span className="text-xs text-gray-500">
                         {user.email}
                       </span>
                     </div>
                   </div>
 
                   <ul className="mt-2 space-y-2">
-                    <li className="flex items-center text-sm space-x-2 hover:text-amber-500 hover:transition-all duration-200  cursor-pointer">
+                    <li className="flex items-center text-sm space-x-2 hover:text-amber-500 hover:transition-all duration-200 cursor-pointer">
                       <UserCircle size={18} />
                       <Link href="/profile">Profile</Link>
                     </li>
-                    <li className="flex items-center text-sm space-x-2 border-b border-gray-500 pb-2 hover:text-amber-500 hover:transition-all duration-200  cursor-pointer">
+                    <li className="flex items-center text-sm space-x-2 border-b border-gray-400 pb-2 hover:text-amber-500 hover:transition-all duration-200 cursor-pointer">
                       <UploadIcon size={18} />
                       <Link href="/upload">Upload Solution</Link>
                     </li>
@@ -169,7 +194,7 @@ export default function Navbar() {
         )}
       </div>
 
-      {isSignedIn ? (
+      {isSignedIn && user ? (
         <div>
           <button
             className="md:hidden cursor-pointer"
@@ -183,32 +208,41 @@ export default function Navbar() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="absolute z-50 right-6 top-14 w-60 border-gray-500 border-1 bg-gray-900 shadow-lg rounded-lg p-4"
+              className="absolute z-50 right-6 top-14 w-60 border-gray-500 border-1 bg-white shadow-lg rounded-lg p-4"
             >
-              <div className="flex items-center space-x-3 border-b border-gray-500 mb-2 pb-2">
-                <img src={user.photoURL} className="w-10 h-10 rounded-full" />
+              <div className="flex items-center space-x-3 border-b border-gray-400 mb-2 pb-2">
+                <div className="relative w-10 h-10">
+                <img
+                  src={user.photoURL || ""}
+                  alt="Profile"
+                  className="rounded-full object-cover cursor-pointer"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = DefaultAvatar.src;
+                  }}
+                />
+                </div>
                 <div className="flex flex-col items-start">
                   <span className="text-sm text-gray font-bold">
                     {user.displayName}
                   </span>
-                  <span className="text-xs text-gray-300">{user.email}</span>
+                  <span className="text-xs text-gray-500">{user.email}</span>
                 </div>
               </div>
 
               <ul className="mt-2 space-y-2">
-                <li className="flex items-center text-sm space-x-2 hover:text-amber-500 hover:transition-all duration-200  cursor-pointer">
+                <li className="flex items-center text-sm space-x-2 hover:text-amber-500 hover:transition-all duration-200 cursor-pointer">
                   <HomeIcon size={18} />
                   <Link href="/">Home</Link>
                 </li>
-                <li className="flex items-center text-sm space-x-2 hover:text-amber-500 hover:transition-all duration-200  cursor-pointer">
+                <li className="flex items-center text-sm space-x-2 hover:text-amber-500 hover:transition-all duration-200 cursor-pointer">
                   <Info size={18} />
                   <Link href="/about-us">About Us</Link>
                 </li>
-                <li className="flex items-center text-sm space-x-2 hover:text-amber-500 hover:transition-all duration-200  cursor-pointer">
+                <li className="flex items-center text-sm space-x-2 hover:text-amber-500 hover:transition-all duration-200 cursor-pointer">
                   <UserCircle size={18} />
                   <Link href="/profile">Profile</Link>
                 </li>
-                <li className="flex items-center text-sm space-x-2 border-b border-gray-500 pb-2 hover:text-amber-500 hover:transition-all duration-200  cursor-pointer">
+                <li className="flex items-center text-sm space-x-2 border-b border-gray-400 pb-2 hover:text-amber-500 hover:transition-all duration-200 cursor-pointer">
                   <UploadIcon size={18} />
                   <Link href="/upload">Upload Solution</Link>
                 </li>

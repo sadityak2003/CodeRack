@@ -7,10 +7,11 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
   try {
     const { id } = await params;
     const solution = await Solution.findById(id);
-    if (!solution) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    if (!solution) return NextResponse.json({ status: 404 });
     return NextResponse.json(solution);
   } catch (error) {
-    return NextResponse.json({ status: 500 });
+    console.error("Error fetching solution:", error);
+    return NextResponse.json({ error: "Failed to fetch solution" }, { status: 500 });
   }
 }
 
@@ -20,21 +21,23 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     const { id } = await params;
     const data = await req.json();
     const updated = await Solution.findByIdAndUpdate(id, data, { new: true });
-    if (!updated) return NextResponse.json({ error: 'Update failed' }, { status: 400 });
+    if (!updated) return NextResponse.json({ status: 400 });
     return NextResponse.json(updated);
   } catch (error) {
-    return NextResponse.json({ status: 500 });
+    console.error("Error updating solution:", error);
+    return NextResponse.json({ error: "Failed to update solution" }, { status: 500 });
   }
 }
 
-  // DELETE
-  export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-    try {
-      const { id } = params;
-      await dbConnect();
-      await Solution.findByIdAndDelete(id);
-      return NextResponse.json({ message: "Solution deleted" }, { status: 200 });
-    } catch (error) {
-      return NextResponse.json({ status: 500 });
-    }
+// DELETE
+export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const { id } = params;
+    await dbConnect();
+    await Solution.findByIdAndDelete(id);
+    return NextResponse.json({ message: "Solution deleted" }, { status: 200 });
+  } catch (error) {
+    console.error("Error deleting solution:", error);
+    return NextResponse.json({ error: "Failed to delete solution" }, { status: 500 });
   }
+}

@@ -4,16 +4,38 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import SolutionCard from "@/components/SolutionCard";
 import { CodeIcon, LogOut } from "lucide-react";
+import DefaultAvatar from "../../public/images/google.png";
+import { FaSearch } from "react-icons/fa";
+import { BlinkBlur } from "react-loading-indicators";
+
+// Define interfaces for type safety
+interface User {
+  name: string;
+  email: string;
+  avatarUrl: string;
+  description: string;
+  leetcode: string;
+  gfg: string;
+  github: string;
+  linkedin: string;
+}
+
+interface Solution {
+  _id: string;
+  title: string;
+  platform: string;
+  contributor: string;
+}
 
 const platforms = ["LeetCode", "GFG", "Codeforces"];
 
 export default function MyProfilePage() {
   const [selectedTab, setSelectedTab] = useState("LeetCode");
-  const [user, setUser] = useState<any>(null);
-  const [loadingSolutions, setLoadingSolutions] = useState(true); // Loading state for solutions
+  const [user, setUser] = useState<User | null>(null);
+  const [loadingSolutions, setLoadingSolutions] = useState(true);
   const router = useRouter();
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const [userSolutions, setUserSolutions] = useState<any[]>([]);
+  const [userSolutions, setUserSolutions] = useState<Solution[]>([]);
+  const [query, setQuery] = useState("");
   
   useEffect(() => {
     const local = localStorage.getItem("user");
@@ -29,7 +51,6 @@ export default function MyProfilePage() {
         const res = await fetch(`/api/user?email=${userData.email}`);
         const data = await res.json();
         setUser(data.user);
-        setIsSignedIn(true);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
@@ -38,7 +59,6 @@ export default function MyProfilePage() {
     console.log(userData, "userData");
 
     const fetchSolutions = async () => {
-      
       try {
         setLoadingSolutions(true);
         const res = await fetch(`/api/solution/usersol?email=${userData.email}`);
@@ -53,43 +73,56 @@ export default function MyProfilePage() {
 
     fetchUser();
     fetchSolutions();
-  }, []);
+  }, [router]);
 
   console.log(userSolutions, "userSolutions");
 
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
-    setIsSignedIn(false);
     window.location.reload();
   };
 
   const groupedSolutions = platforms.reduce((acc, platform) => {
     acc[platform] = userSolutions.filter((sol) => sol.platform === platform);
     return acc;
-  }, {} as Record<string, any[]>);
+  }, {} as Record<string, Solution[]>);
 
   if (!user) {
-    return <div className="text-white p-10">Loading...</div>;
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <span className="text-xs mb-2 text-gray-500">Loading Profile...</span>
+        <BlinkBlur size="small" color={["#ffb500", "#00ff36", "#004aff", "#ff00c9"]} />
+      </div>
+    );
   }
 
   if (loadingSolutions) {
-    return <div className="text-white p-10">Loading solutions...</div>;
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <span className="text-xs mb-2 text-gray-500">Loading Solutions...</span>
+        <BlinkBlur size="small" color={["#ffb500", "#00ff36", "#004aff", "#ff00c9"]} />
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white pt-15 px-8 pb-20">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 w-full">
+    <div className="flex gap-5 min-h-screen bg-gray-100 pt-10 px-8 pb-20 justify-center">
         {/* Left: User Info */}
-        <div className="md:col-span-1 bg-gray-900 p-6 rounded-lg">
+        <div className="md:col-span-1 shadow-xl bg-white p-6 rounded-lg w-fit h-fit">
           <div className="flex items-center gap-4">
+            <div className="relative w-20 h-20">
             <img
-              src={user.avatarUrl}
-              alt="User"
-              className="w-20 h-20 rounded object-cover"
-            />
+                  src={user.avatarUrl || ""}
+                  alt="Profile"
+                  className="rounded-full object-cover w-20 h-20"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = DefaultAvatar.src;
+                  }}
+                />
+            </div>
             <div>
-              <h2 className="text-lg font-semibold">{user.name}</h2>
+              <h2 className="text-lg text-gray-600 font-semibold">{user.name}</h2>
               <p className="text-xs text-gray-400">{user.email}</p>
             </div>
           </div>
@@ -98,7 +131,7 @@ export default function MyProfilePage() {
 
           <button
             onClick={() => router.push("/edit-profile")}
-            className="mt-4 bg-green-400 text-sm text-white py-1 px-4 rounded hover:bg-green-700 transition w-full"
+            className="mt-4 bg-green-400 text-sm text-white py-1 px-4 rounded hover:bg-green-600 transition w-full cursor-pointer"
           >
             Edit Profile
           </button>
@@ -129,32 +162,67 @@ export default function MyProfilePage() {
         </div>
 
         {/* Right: Contributions */}
-        <div className="md:col-span-3 bg-gray-900 p-6 rounded-lg w-full">
-          <h3 className="text-xl font-bold mb-4">My Contributions</h3>
+        <div className="md:col-span-3 shadow-xl bg-white p-6 rounded-lg w-5xl h-fit">
+          <h3 className="text-xl text-gray-600 font-bold mb-4">My Contributions</h3>
 
-          <div className="flex gap-4 mb-6">
-            {platforms.map((name) => (
-              <button
-                key={name}
-                onClick={() => setSelectedTab(name)}
-                className={`px-4 py-2 rounded-full transition ${
-                  selectedTab === name
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-                }`}
-              >
-                {name}
-              </button>
-            ))}
-          </div>
+          <div className="max-w-2xl mx-auto mt-5 mb-10 relative">
+                  <FaSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-sm text-gray-500" />
+                  <input
+                    type="text"
+                    placeholder="Search a question (e.g. Two Sum)"
+                    className="w-full p-2 pl-10 rounded-lg bg-gray-100 text-gray-600 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+                </div>
+
+          <div className="flex justify-center items-center space-x-4">
+        {platforms.map((name) => {
+          const isSelected = selectedTab === name;
+
+          const hoverColor = {
+            LeetCode: "hover:text-amber-500",
+            GFG: "hover:text-green-500",
+            Codeforces: "hover:text-blue-500",
+          }[name];
+
+          const color = {
+            LeetCode: "text-white",
+            GFG: "text-white",
+            Codeforces: "text-white",
+          }[name];
+
+          const backgroundColor = {
+            LeetCode: "bg-amber-500",
+            GFG: "bg-green-500",
+            Codeforces: "bg-blue-500",
+          }[name];
+
+          return (
+            <button
+              key={name}
+              onClick={() => setSelectedTab(name)}
+              className={`px-4 py-2 cursor-pointer rounded-full transition text-sm ${
+                isSelected ? `${color} ${backgroundColor}` : `text-gray-500 ${hoverColor}`
+              }`}
+            >
+              {name}
+            </button>
+          );
+        })}
+      </div>
+
+      <hr className="mb-5 mt-4 border-gray-500" />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-            {(groupedSolutions[selectedTab] || []).map((sol, idx) => (
-              <SolutionCard key={sol._id || idx} {...sol} currentUserEmail={user.email}/>
+            {(groupedSolutions[selectedTab] || []).filter((sol) =>
+            sol.title.toLowerCase().includes(query.toLowerCase())
+          ).map((sol) => (
+              <SolutionCard key={sol._id} {...sol} currentUserEmail={user.email}/>
             ))}
           </div>
         </div>
-      </div>
+      
     </div>
   );
 }
