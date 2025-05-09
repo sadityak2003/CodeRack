@@ -3,13 +3,12 @@ import dbConnect from "@/lib/db";
 import Solution from "@/models/Solution";
 
 export async function GET(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+  req: NextRequest,
+  { params }: { params: { id: string } }) {
   try {
     await dbConnect();
 
-    const { id } = context.params;
+    const { id } = params;
 
     const solution = await Solution.findById(id);
 
