@@ -4,19 +4,19 @@ import Solution from "@/models/Solution";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     await dbConnect();
-    
-    const { id } = params;
-    
+
+    const { id } = context.params;
+
     const solution = await Solution.findById(id);
-    
+
     if (!solution) {
       return NextResponse.json({ error: "Solution not found" }, { status: 404 });
     }
-    
+
     return NextResponse.json(solution);
   } catch (error) {
     console.error("Error fetching solution:", error);
