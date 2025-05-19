@@ -22,9 +22,17 @@ interface User {
 
 interface Solution {
   _id: string;
-  title: string;
   platform: string;
-  contributor: string;
+  contributor: {
+    name: string;
+    email: string;
+    avatarUrl: string;
+  };
+  title: string;
+  language: string;
+  codeSnippet: string;
+  description: string;
+  // Add other properties as needed
 }
 
 const platforms = ["LeetCode", "GFG", "Codeforces"];
@@ -214,13 +222,25 @@ export default function MyProfilePage() {
 
       <hr className="mb-5 mt-4 border-gray-500" />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-            {(groupedSolutions[selectedTab] || []).filter((sol) =>
-            sol.title.toLowerCase().includes(query.toLowerCase())
-          ).map((sol) => (
-              <SolutionCard key={sol._id} {...sol} currentUserEmail={user.email}/>
-            ))}
-          </div>
+           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                     {(groupedSolutions[selectedTab] || [])
+                       .filter((sol) =>
+                         sol.title.toLowerCase().includes(query.toLowerCase())
+                       )
+                       .map((sol) => (
+                         <SolutionCard
+                           key={sol._id}
+                           _id={sol._id}
+                           platform={sol.platform}
+                           contributor={sol.contributor}
+                           title={sol.title}
+                           language={sol.language}
+                           codeSnippet={sol.codeSnippet}
+                           description={sol.description}
+                           currentUserEmail={user.email}
+                         />
+                       ))}
+                   </div>
         </div>
       
     </div>

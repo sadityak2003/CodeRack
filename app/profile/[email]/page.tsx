@@ -23,8 +23,15 @@ interface User {
 interface Solution {
   _id: string;
   platform: string;
-  contributor: string;
+  contributor: {
+    name: string;
+    email: string;
+    avatarUrl: string;
+  };
   title: string;
+  language: string;
+  codeSnippet: string;
+  description: string;
   // Add other properties as needed
 }
 
@@ -224,7 +231,13 @@ export default function UserProfilePage() {
               .map((sol) => (
                 <SolutionCard
                   key={sol._id}
-                  {...sol}
+                  _id={sol._id}
+                  platform={sol.platform}
+                  contributor={sol.contributor}
+                  title={sol.title}
+                  language={sol.language}
+                  codeSnippet={sol.codeSnippet}
+                  description={sol.description}
                   currentUserEmail={user.email}
                 />
               ))}

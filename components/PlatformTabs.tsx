@@ -1,6 +1,7 @@
 "use client";
 
 import SolutionCard from "./SolutionCard";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { BlinkBlur } from "react-loading-indicators";
@@ -9,10 +10,17 @@ const platforms = ["LeetCode", "GFG", "Codeforces"];
 
 interface Solution {
   _id: string;
-  title: string;
   platform: string;
-  difficulty?: string;
-  link?: string;
+  contributor: {
+    name: string;
+    email: string;
+    avatarUrl: string;
+  };
+  title: string;
+  language: string;
+  codeSnippet: string;
+  description: string;
+  // Add other properties as needed
 }
 
 export default function PlatformTabs() {
@@ -20,6 +28,7 @@ export default function PlatformTabs() {
   const [allSolutions, setallSolutions] = useState<Solution[]>([]);
   const [loadingSolutions, setLoadingSolutions] = useState(true);
   const [query, setQuery] = useState("");
+  const router = useRouter();
 
   const fetchSolutions = async () => {
     setLoadingSolutions(true);
@@ -122,14 +131,24 @@ export default function PlatformTabs() {
 
       {/* Grid Layout for Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-        {(groupedSolutions[selectedTab] || [])
-          .filter((sol) =>
-            sol.title.toLowerCase().includes(query.toLowerCase())
-          )
-          .map((sol, idx) => (
-            <SolutionCard key={sol._id || idx} {...sol} />
-          ))}
-      </div>
+                  {(groupedSolutions[selectedTab] || [])
+                    .filter((sol) =>
+                      sol.title.toLowerCase().includes(query.toLowerCase())
+                    )
+                    .map((sol) => (
+                      <SolutionCard
+                        key={sol._id}
+                        _id={sol._id}
+                        platform={sol.platform}
+                        contributor={sol.contributor}
+                        title={sol.title}
+                        language={sol.language}
+                        codeSnippet={sol.codeSnippet}
+                        description={sol.description}
+                        currentUserEmail={""}
+                      />
+                    ))}
+                </div>
     </div>
   );
 }
