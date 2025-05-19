@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Card({ link, imageURL, name, desc }: { link: string; imageURL: string; name: string; desc: string; }) {
+import type { StaticImageData } from "next/image";
+
+export default function Card({ link, imageURL, name, desc }: { link: string; imageURL: string | StaticImageData; name: string; desc: string; }) {
   return (
     <Link href={link} className="flex flex-col w-100 p-2 bg-white shadow-md rounded-lg mt-4 cursor-pointer hover:shadow-lg transition hover:shadow-orange-500">
       <div className="flex w-full h-60 bg-gray-200 p-5 rounded-lg items-center justify-center">
