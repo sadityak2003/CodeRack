@@ -4,18 +4,17 @@ import Solution from "@/models/Solution";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }) {
+  { params }: { params: { id: string } }
+) {
   try {
     await dbConnect();
-
-    const { id } = params;
-
-    const solution = await Solution.findById(id);
-
+    
+    const solution = await Solution.findById(params.id);
+    
     if (!solution) {
       return NextResponse.json({ error: "Solution not found" }, { status: 404 });
     }
-
+    
     return NextResponse.json(solution);
   } catch (error) {
     console.error("Error fetching solution:", error);
@@ -39,7 +38,6 @@ export async function PATCH(
   }
 }
 
-// DELETE
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const { id } = params;
