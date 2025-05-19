@@ -1,7 +1,6 @@
 "use client";
 
 import SolutionCard from "./SolutionCard";
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { BlinkBlur } from "react-loading-indicators";
@@ -28,7 +27,6 @@ export default function PlatformTabs() {
   const [allSolutions, setallSolutions] = useState<Solution[]>([]);
   const [loadingSolutions, setLoadingSolutions] = useState(true);
   const [query, setQuery] = useState("");
-  const router = useRouter();
 
   const fetchSolutions = async () => {
     setLoadingSolutions(true);
