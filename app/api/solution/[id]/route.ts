@@ -8,7 +8,13 @@ export async function GET(
   try {
     await dbConnect();
     
-    const solution = req.nextUrl.searchParams.get("id");
+    const id = req.nextUrl.searchParams.get("id");
+    
+    if (!id) {
+      return NextResponse.json({ error: "Solution ID is required" }, { status: 400 });
+    }
+    
+    const solution = await Solution.findById(id);
     
     if (!solution) {
       return NextResponse.json({ error: "Solution not found" }, { status: 404 });
@@ -22,14 +28,24 @@ export async function GET(
 }
 
 export async function PATCH(
-  req: NextRequest,
-   { params }: { params: { id: string } }) {
-  await dbConnect();
+  req: NextRequest
+) {
   try {
-    const { id } = params;
+    await dbConnect();
+    
+    const id = req.nextUrl.searchParams.get("id");
+    
+    if (!id) {
+      return NextResponse.json({ error: "Solution ID is required" }, { status: 400 });
+    }
+    
     const data = await req.json();
     const updated = await Solution.findByIdAndUpdate(id, data, { new: true });
-    if (!updated) return NextResponse.json({ status: 400 });
+    
+    if (!updated) {
+      return NextResponse.json({ error: "Solution not found" }, { status: 404 });
+    }
+    
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Error updating solution:", error);
@@ -37,11 +53,24 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  req: NextRequest
+) {
   try {
-    const { id } = params;
     await dbConnect();
-    await Solution.findByIdAndDelete(id);
+    
+    const id = req.nextUrl.searchParams.get("id");
+    
+    if (!id) {
+      return NextResponse.json({ error: "Solution ID is required" }, { status: 400 });
+    }
+    
+    const deleted = await Solution.findByIdAndDelete(id);
+    
+    if (!deleted) {
+      return NextResponse.json({ error: "Solution not found" }, { status: 404 });
+    }
+    
     return NextResponse.json({ message: "Solution deleted" }, { status: 200 });
   } catch (error) {
     console.error("Error deleting solution:", error);
