@@ -3,13 +3,12 @@ import dbConnect from "@/lib/db";
 import Solution from "@/models/Solution";
 
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
+  req: NextRequest
 ) {
   try {
     await dbConnect();
     
-    const solution = await Solution.findById(params.id);
+    const solution = req.nextUrl.searchParams.get("id");
     
     if (!solution) {
       return NextResponse.json({ error: "Solution not found" }, { status: 404 });
