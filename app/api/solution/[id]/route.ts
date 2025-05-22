@@ -2,13 +2,17 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Solution from "@/models/Solution";
 
+interface RouteParams {
+  params: { id: string };
+}
+
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
-) {
+  { params }: RouteParams
+): Promise<NextResponse> {
   try {
     await dbConnect();
-    const id = params.id; // Directly access the id property
+    const { id } = params;
 
     const solution = await Solution.findById(id);
     if (!solution) {
@@ -25,18 +29,16 @@ export async function GET(
   }
 }
 
-// Similar changes for PATCH and DELETE
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
-) {
+  { params }: RouteParams
+): Promise<NextResponse> {
   try {
     await dbConnect();
-    const id = params.id; // Direct access
-    
+    const { id } = params;
     const data = await request.json();
-    const updated = await Solution.findByIdAndUpdate(id, data, { new: true });
     
+    const updated = await Solution.findByIdAndUpdate(id, data, { new: true });
     if (!updated) {
       return NextResponse.json({ error: "Solution not found" }, { status: 404 });
     }
@@ -53,11 +55,11 @@ export async function PATCH(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
-) {
+  { params }: RouteParams
+): Promise<NextResponse> {
   try {
     await dbConnect();
-    const id = params.id; // Direct access
+    const { id } = params;
     
     await Solution.findByIdAndDelete(id);
     return NextResponse.json(
