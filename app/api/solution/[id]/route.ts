@@ -1,17 +1,16 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Solution from "@/models/Solution";
 
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }) {
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     await dbConnect();
-
-    const { id } = params;
+    const id = params.id; // Directly access the id property
 
     const solution = await Solution.findById(id);
-
     if (!solution) {
       return NextResponse.json({ error: "Solution not found" }, { status: 404 });
     }
@@ -19,35 +18,57 @@ export async function GET(
     return NextResponse.json(solution);
   } catch (error) {
     console.error("Error fetching solution:", error);
-    return NextResponse.json({ error: "Failed to fetch solution" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch solution" },
+      { status: 500 }
+    );
   }
 }
 
+// Similar changes for PATCH and DELETE
 export async function PATCH(
-  req: NextRequest,
-   { params }: { params: { id: string } }) {
-  await dbConnect();
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
-    const { id } = params;
-    const data = await req.json();
+    await dbConnect();
+    const id = params.id; // Direct access
+    
+    const data = await request.json();
     const updated = await Solution.findByIdAndUpdate(id, data, { new: true });
-    if (!updated) return NextResponse.json({ status: 400 });
+    
+    if (!updated) {
+      return NextResponse.json({ error: "Solution not found" }, { status: 404 });
+    }
+    
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Error updating solution:", error);
-    return NextResponse.json({ error: "Failed to update solution" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update solution" },
+      { status: 500 }
+    );
   }
 }
 
-// DELETE
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
-    const { id } = params;
     await dbConnect();
+    const id = params.id; // Direct access
+    
     await Solution.findByIdAndDelete(id);
-    return NextResponse.json({ message: "Solution deleted" }, { status: 200 });
+    return NextResponse.json(
+      { message: "Solution deleted successfully" },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error deleting solution:", error);
-    return NextResponse.json({ error: "Failed to delete solution" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to delete solution" },
+      { status: 500 }
+    );
   }
 }
