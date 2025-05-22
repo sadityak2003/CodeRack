@@ -44,44 +44,59 @@ export default function MyProfilePage() {
   const router = useRouter();
   const [userSolutions, setUserSolutions] = useState<Solution[]>([]);
   const [query, setQuery] = useState("");
+  const [error, setError] = useState<string | null>(null);
   
-  useEffect(() => {
+  // Add this state
+
+// Update your useEffect
+useEffect(() => {
+  const fetchData = async () => {
     const local = localStorage.getItem("user");
     if (!local) {
       router.push("/");
       return;
     }
 
-    const userData = JSON.parse(local);
+    try {
+      const userData = JSON.parse(local);
+      console.log("Fetching data for:", userData.email); // Debug log
 
-    const fetchUser = async () => {
-      try {
-        const res = await fetch(`/api/user?email=${userData.email}`);
-        const data = await res.json();
-        setUser(data.user);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      }
-    };
+      // Set timeout for API calls
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error("Request timeout")), 10000)
+      );
 
-    console.log(userData, "userData");
+      // Fetch user data with timeout
+      const userResponse = await Promise.race([
+        fetch(`/api/user?email=${userData.email}`),
+        timeoutPromise
+      ]) as Response;
+      
+      if (!userResponse.ok) throw new Error("Failed to fetch user");
+      const userResult = await userResponse.json();
+      setUser(userResult.user);
 
-    const fetchSolutions = async () => {
-      try {
-        setLoadingSolutions(true);
-        const res = await fetch(`/api/solution/usersol?email=${userData.email}`);
-        const data = await res.json();
-        setUserSolutions(data.solutions);
-        setLoadingSolutions(false);
-      } catch (error) {
-        console.error("Error fetching solutions:", error);
-        setLoadingSolutions(false);
-      }
-    };
+      // Fetch solutions with timeout
+      const solutionsResponse = await Promise.race([
+        fetch(`/api/solution/usersol?email=${userData.email}`),
+        timeoutPromise
+      ]);
+      
+      const solutionsRes = solutionsResponse as Response;
+      if (!solutionsRes.ok) throw new Error("Failed to fetch solutions");
+      const solutionsResult = await solutionsRes.json();
+      setUserSolutions(solutionsResult.solutions);
+      
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setError(err instanceof Error ? err.message : "Unknown error occurred");
+    } finally {
+      setLoadingSolutions(false);
+    }
+  };
 
-    fetchUser();
-    fetchSolutions();
-  }, [router]);
+  fetchData();
+}, [router]);
 
   console.log(userSolutions, "userSolutions");
 
@@ -113,6 +128,20 @@ export default function MyProfilePage() {
       </div>
     );
   }
+
+  if (error) {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="text-red-500 mb-4">Error: {error}</div>
+      <button 
+        onClick={() => window.location.reload()}
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        Retry
+      </button>
+    </div>
+  );
+}
 
   return (
     <div className="flex gap-5 min-h-screen bg-gray-100 pt-10 px-8 pb-20 justify-center">

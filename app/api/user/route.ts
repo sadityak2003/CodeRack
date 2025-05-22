@@ -36,17 +36,38 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  await dbConnect();
+  try {
+    await dbConnect();
+    console.log("Database connected"); // Debug log
 
-  const email = req.nextUrl.searchParams.get("email");
+    const email = req.nextUrl.searchParams.get("email");
+    console.log("Fetching user for email:", email); // Debug log
 
-  if (!email) {
-    return NextResponse.json({ error: "Missing email" }, { status: 400 });
+    if (!email) {
+      return NextResponse.json(
+        { error: "Missing email parameter" },
+        { status: 400 }
+      );
+    }
+
+    const user = await User.findOne({ email }).maxTimeMS(10000); // 10s timeout
+    console.log("User found:", user ? user.email : "none"); // Debug log
+
+    if (!user) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ user });
+  } catch (error) {
+    console.error("Error in GET /api/user:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
-
-  const user = await User.findOne({ email });
-
-  return NextResponse.json({ user });
 }
 
 // Edit user profile
