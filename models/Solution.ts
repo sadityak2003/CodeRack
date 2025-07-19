@@ -12,4 +12,6 @@ const SolutionSchema = new mongoose.Schema({
   timestamps: true,
 });
 
+SolutionSchema.index({ email: 1, title: 1 }, { unique: true });
+
 export default mongoose.models.Solution || mongoose.model('Solution', SolutionSchema);

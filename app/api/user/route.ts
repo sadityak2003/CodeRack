@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import User from "@/models/User";
+import Solution from "@/models/Solution";
 
 export async function POST(req: NextRequest) {
   await dbConnect();
@@ -51,7 +52,9 @@ export async function GET(req: NextRequest) {
     }
 
     const user = await User.findOne({ email }).maxTimeMS(10000); // 10s timeout
+
     console.log("User found:", user ? user.email : "none"); // Debug log
+    const solutions = await Solution.find({ contributor: user?._id }).populate('contributor', 'name email avatarUrl');
 
     if (!user) {
       return NextResponse.json(
@@ -60,7 +63,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    return NextResponse.json({ user });
+    return NextResponse.json({ user, solutions });
   } catch (error) {
     console.error("Error in GET /api/user:", error);
     return NextResponse.json(

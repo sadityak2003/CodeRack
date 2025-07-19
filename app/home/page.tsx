@@ -62,12 +62,11 @@ const Resources = {
 }
 
 
-
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 mt-50 ml-30 mr-30 mb-30">
       <div className="flex flex-col items-center">
-          <h1 className="text-5xl font-bold mb-4 text-gray-600">
+          <h1 className="text-5xl font-bold mb-4 text-gray-700">
             Welcome to Coding Geeks
           </h1>
           <p className="text-lg mb-8 text-gray-500">
@@ -80,6 +79,9 @@ export default function HomePage() {
             Explore Solutions
           </a>
         </div>
+
+        <div className="w-50 h-50 bg-amber-600 shadow transform rotate-35 absolute top-40 left-100 opacity-20 z-0">
+        </div>
         
 
         <div className="items-start mt-30">
@@ -87,12 +89,12 @@ export default function HomePage() {
             <p className="text-md text-gray-500">Explore our curated resources to enhance your coding skills.</p>
         </div>
 
-        <div className="flex gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <ResourceCard 
               imageURL={Resources.tuf.imageUrl}
               name={Resources.tuf.name}
               desc={Resources.tuf.desc}
-              link={Resources.tuf.link}
+              link={Resources.tuf.link}       
             />
             <ResourceCard 
               imageURL={Resources.geeks.imageUrl}
@@ -106,9 +108,6 @@ export default function HomePage() {
               desc={Resources.leetcode.desc}
               link={Resources.leetcode.link}
             />
-            </div>
-
-            <div className="flex gap-10">
             <ResourceCard 
               imageURL={Resources.codeforces.imageUrl}
               name={Resources.codeforces.name}
@@ -127,9 +126,6 @@ export default function HomePage() {
               desc={Resources.cs50.desc}
               link={Resources.cs50.link}
             />
-            </div>
-
-            <div className="flex gap-10">
             <ResourceCard 
               imageURL={Resources.freecodecamp.imageUrl}
               name={Resources.freecodecamp.name}

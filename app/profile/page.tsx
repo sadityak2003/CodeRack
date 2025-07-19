@@ -63,7 +63,7 @@ useEffect(() => {
 
       // Set timeout for API calls
       const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error("Request timeout")), 10000)
+        setTimeout(() => reject(new Error("Request timeout")), 20000)
       );
 
       // Fetch user data with timeout
@@ -75,17 +75,7 @@ useEffect(() => {
       if (!userResponse.ok) throw new Error("Failed to fetch user");
       const userResult = await userResponse.json();
       setUser(userResult.user);
-
-      // Fetch solutions with timeout
-      const solutionsResponse = await Promise.race([
-        fetch(`/api/solution/usersol?email=${userData.email}`),
-        timeoutPromise
-      ]);
-      
-      const solutionsRes = solutionsResponse as Response;
-      if (!solutionsRes.ok) throw new Error("Failed to fetch solutions");
-      const solutionsResult = await solutionsRes.json();
-      setUserSolutions(solutionsResult.solutions);
+      setUserSolutions(userResult.solutions);
       
     } catch (err) {
       console.error("Fetch error:", err);
