@@ -73,7 +73,7 @@ export default function PlatformTabs() {
   }
 
   return (
-    <div className="bg-gray-100 mt-8 mb-10 px-6 items-center justify-center">
+    <div className="pr-20 pl-20 max-w-7xl bg-gray-100 mt-8 mb-15 items-center justify-center mx-auto">
       {/* Search Input */}
       <div className="max-w-2xl mx-auto mt-5 mb-10 relative">
         <FaSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-sm text-gray-500" />

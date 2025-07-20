@@ -64,7 +64,7 @@ const Resources = {
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100 mt-50 ml-30 mr-30 mb-30">
+    <div className="flex flex-col min-h-screen bg-gray-100 items-center justify-center mt-50 ml-30 mr-30 mb-30">
       <div className="flex flex-col items-center">
           <h1 className="text-5xl font-bold mb-4 text-gray-700">
             Welcome to Coding Geeks

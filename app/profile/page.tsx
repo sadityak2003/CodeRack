@@ -173,7 +173,7 @@ useEffect(() => {
             <a href={user.github} target="_blank" className="flex gap-2 items-center">
               <CodeIcon size={16} /> {user.github}
             </a>
-            <a href={user.linkedin} target="_blank" className="flex gap-2 items-center">
+            <a href={`https://www.linkedin.com/in/${user.linkedin}`} target="_blank" className="flex gap-2 items-center">
               <CodeIcon size={16} /> {user.linkedin}
             </a>
           </div>

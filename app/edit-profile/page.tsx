@@ -85,6 +85,7 @@ export default function EditProfilePage() {
   return (
     <div className="min-h-screen bg-gray-200 px-6 py-10">
       <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-xl">
+        <h1 className="text-xl font-bold mb-6 text-gray-600">Saved Profile</h1>
         <form
           onSubmit={handleSubmit}
           className="flex justify-between gap-15 space-y-5"
