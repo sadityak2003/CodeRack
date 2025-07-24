@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CameraIcon } from "lucide-react";
+import { BlinkBlur } from "react-loading-indicators";
 
 export default function EditProfilePage() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function EditProfilePage() {
   const [github, setGitHub] = useState("");
   const [linkedin, setLinkedIn] = useState("");
   const [isHoveringImage, setIsHoveringImage] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -47,6 +49,7 @@ export default function EditProfilePage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSaving(true);
 
     const updatedProfile = {
       email,
@@ -79,8 +82,22 @@ export default function EditProfilePage() {
     } catch (err) {
       console.error("Update failed:", err);
       alert("Profile update failed.");
+    } finally {
+      setIsSaving(false);
     }
   };
+
+  if (!email) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <span className="text-xs mb-2 text-gray-500">Loading...</span>
+        <BlinkBlur
+          size="small"
+          color={["#ffb500", "#00ff36", "#004aff", "#ff00c9"]}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-200 px-6 py-10">
@@ -88,7 +105,7 @@ export default function EditProfilePage() {
         <h1 className="text-xl font-bold mb-6 text-gray-600">Saved Profile</h1>
         <form
           onSubmit={handleSubmit}
-          className="flex justify-between gap-15 space-y-5"
+          className="flex md:flex-row flex-col justify-between gap-15 space-y-5"
         >
           <div className="flex flex-col items-center gap-4">
             <label
@@ -151,8 +168,7 @@ export default function EditProfilePage() {
               Hover over the image to change it
             </p>
           </div>
-
-          <div className="flex flex-col gap-2 w-3xl">
+          <div className="flex flex-col gap-2 w-full md:w-2/3">
             <div className="flex gap-5 justify-between items-center">
               <label className="block capitalize mb-1 text-sm">Name</label>
               <input
@@ -185,7 +201,7 @@ export default function EditProfilePage() {
 
             <div className="flex justify-between gap-5 items-center">
               <label className="block mb-1 text-sm">
-                GeeksforGeeks Profile
+                GFG Profile
               </label>
               <input
                 type="text"
@@ -217,9 +233,36 @@ export default function EditProfilePage() {
 
             <button
               type="submit"
-              className="w-50 mt-4 bg-blue-500 hover:bg-blue-700 transition py-2 rounded text-white font-semibold cursor-pointer"
+              className="flex items-center justify-center w-50 mt-4 bg-blue-500 hover:bg-blue-700 transition py-2 rounded text-white font-semibold cursor-pointer"
+              disabled={isSaving}
             >
-              Save Changes
+              {isSaving ? (
+                <>
+                  <svg
+                    className="animate-spin h-5 w-5 mr-2 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                  </svg>
+                  Saving...
+                </>
+              ) : (
+                "Save Changes"
+              )}
             </button>
           </div>
         </form>

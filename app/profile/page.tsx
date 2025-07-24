@@ -7,6 +7,12 @@ import { CodeIcon, LogOut } from "lucide-react";
 import DefaultAvatar from "../../public/images/google.png";
 import { FaSearch } from "react-icons/fa";
 import { BlinkBlur } from "react-loading-indicators";
+import Image from "next/image";
+
+import LinkedIn from "../../public/icons/linkedin.png";
+import LeetCode from "../../public/icons/leetcode.png"; 
+import GFG from "../../public/icons/gfg.png";
+import GitHub from "../../public/icons/github.png";
 
 // Define interfaces for type safety
 interface User {
@@ -134,7 +140,7 @@ useEffect(() => {
 }
 
   return (
-    <div className="flex gap-5 min-h-screen bg-gray-100 pt-10 px-8 pb-20 justify-center">
+    <div className="flex md:flex-row flex-col gap-5 min-h-screen bg-gray-100 pt-10 px-5 pb-20 items md:items-start items-center justify-center">
         {/* Left: User Info */}
         <div className="md:col-span-1 shadow-xl bg-white p-6 rounded-lg w-fit h-fit">
           <div className="flex items-center gap-4">
@@ -164,17 +170,17 @@ useEffect(() => {
           </button>
 
           <div className="mt-4 space-y-2 text-sm text-gray-400">
-            <a href={`https://leetcode.com/u/${user.leetcode}`} target="_blank" className="flex gap-2 items-center">
-              <CodeIcon size={16} /> {user.leetcode}
+            <a href={`https://leetcode.com/u/${user.leetcode}`} target="_blank" className="flex gap-2 items-center hover:text-amber-500">
+              <Image src={LeetCode} width={26} height={26} alt="LeetCode" /> {user.leetcode}
             </a>
-            <a href={user.gfg} target="_blank" className="flex gap-2 items-center">
-              <CodeIcon size={16} /> {user.gfg}
+            <a href={user.gfg} target="_blank" className="flex gap-2 items-center hover:text-green-500">
+              <Image src={GFG} width={22} height={22} alt="GFG" /> {user.gfg}
             </a>
-            <a href={user.github} target="_blank" className="flex gap-2 items-center">
-              <CodeIcon size={16} /> {user.github}
+            <a href={user.github} target="_blank" className="flex gap-2 items-center hover:text-gray-500">
+              <Image src={GitHub} width={22} height={22} alt="GitHub" /> {user.github}
             </a>
-            <a href={`https://www.linkedin.com/in/${user.linkedin}`} target="_blank" className="flex gap-2 items-center">
-              <CodeIcon size={16} /> {user.linkedin}
+            <a href={`https://www.linkedin.com/in/${user.linkedin}`} target="_blank" className="flex gap-2 items-center hover:text-blue-500">
+              <Image src={LinkedIn} width={20} height={20} alt="LinkedIn" /> {user.linkedin}
             </a>
           </div>
 
@@ -182,14 +188,14 @@ useEffect(() => {
 
           <button 
             onClick={handleLogout}
-            className="flex w-full items-center gap-2 text-sm text-red-400 hover:text-red-600">
+            className="flex w-full items-center gap-2 text-sm text-red-400 hover:text-red-600 cursor-pointer">
             <LogOut size={18} />
             Sign Out
           </button>
         </div>
 
         {/* Right: Contributions */}
-        <div className="md:col-span-3 shadow-xl bg-white p-6 rounded-lg w-5xl h-fit">
+        <div className="md:col-span-3 shadow-xl bg-white p-6 rounded-lg max-w-5xl md:w-2/3 h-fit">
           <h3 className="text-xl text-gray-600 font-bold mb-4">My Contributions</h3>
 
           <div className="max-w-2xl mx-auto mt-5 mb-10 relative">

@@ -168,8 +168,8 @@ export default function SolutionCard({
 
       {/* MODAL VIEW */}
       {open && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white text-white max-w-full w-full rounded-lg shadow-xl p-6 ml-5 mr-5 relative">
+        <div className="flex fixed inset-0 bg-black/50 items-center justify-center z-50">
+          <div className="bg-white text-white max-w-7xl rounded-lg shadow-xl p-6 ml-5 mr-5 relative">
             <button
               onClick={() => setOpen(false)}
               className="absolute top-3 right-4 text-gray-400 hover:text-black text-xl cursor-pointer"
@@ -202,14 +202,14 @@ export default function SolutionCard({
               </button>
             </div>
 
-             <div className="flex gap-4 ">
+             <div className="flex md:flex-row flex-col gap-4 ">
               {/* Full Code */}
-            <div className=" w-1/2 bg-gray-100 p-4 rounded max-h-[500px] overflow-y-auto text-sm text-gray-500 whitespace-pre-wrap">
+            <div className="md:w-1/2 bg-gray-100 p-4 rounded md:max-h-[500px] max-h-[300px] overflow-y-auto text-sm text-gray-500 whitespace-pre-wrap">
               {codeSnippet}
             </div>
 
             {/* Description */}
-            <div className=" w-1/2 mt-4 text-sm text-gray-500">
+            <div className="md:w-1/2 mt-4 md:max-h-[500px] max-h-[300px] overflow-y-auto text-gray-500">
               <h3 className="text-lg font-semibold mb-2">Description</h3>
               <p>{description}</p>
             </div>

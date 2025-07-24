@@ -7,6 +7,12 @@ import DefaultAvatar from "../../../public/images/google.png";
 import { CodeIcon } from "lucide-react";
 import { FaSearch } from "react-icons/fa";
 import { BlinkBlur } from "react-loading-indicators";
+import Image from "next/image";
+
+import LinkedIn from "../../../public/icons/linkedin.png";
+import LeetCode from "../../../public/icons/leetcode.png"; 
+import GFG from "../../../public/icons/gfg.png";
+import GitHub from "../../../public/icons/github.png";
 
 // Define interfaces for type safety
 interface User {
@@ -140,28 +146,28 @@ export default function UserProfilePage() {
               target="_blank"
               className="flex gap-2 items-center"
             >
-              <CodeIcon size={16} /> {user.leetcode}
+              <Image src={LeetCode} width={26} height={26} alt="LeetCode" /> {user.leetcode}
             </a>
             <a
               href={user.gfg}
               target="_blank"
               className="flex gap-2 items-center"
             >
-              <CodeIcon size={16} /> {user.gfg}
+              <Image src={GFG} width={22} height={22} alt="GFG" />  {user.gfg}
             </a>
             <a
               href={user.github}
               target="_blank"
               className="flex gap-2 items-center"
             >
-              <CodeIcon size={16} /> {user.github}
+              <Image src={GitHub} width={22} height={22} alt="GitHub" /> {user.github}
             </a>
             <a
               href={user.linkedin}
               target="_blank"
               className="flex gap-2 items-center"
             >
-              <CodeIcon size={16} /> {user.linkedin}
+              <Image src={LinkedIn} width={20} height={20} alt="LinkedIn" /> {user.linkedin}
             </a>
           </div>
         </div>
