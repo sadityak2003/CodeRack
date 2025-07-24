@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import SolutionCard from "@/components/SolutionCard";
-import { CodeIcon, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import DefaultAvatar from "../../public/images/google.png";
 import { FaSearch } from "react-icons/fa";
 import { BlinkBlur } from "react-loading-indicators";

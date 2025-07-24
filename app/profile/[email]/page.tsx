@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import SolutionCard from "@/components/SolutionCard";
 import DefaultAvatar from "../../../public/images/google.png";
-import { CodeIcon } from "lucide-react";
 import { FaSearch } from "react-icons/fa";
 import { BlinkBlur } from "react-loading-indicators";
 import Image from "next/image";
