@@ -39,7 +39,6 @@ export default function UploadPage() {
   const [user, setUser] = useState<User | null>(null);
   const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
