@@ -185,8 +185,8 @@ export default function SolutionCard({
                 className="w-10 h-10 rounded-full object-cover border-2 border-gray-200 hover:border-1 hover:border-amber-500 cursor-pointer"
               />
               <div>
-                <h2 className="text-lg font-bold text-gray-600">{title}</h2>
-                <p className="text-sm text-gray-500 font-semibold">
+                <h2 className="md:text-lg text-sm font-bold text-gray-600">{title}</h2>
+                <p className="md:text-sm text-xs text-gray-500 font-semibold">
                   {platform} • {language}
                 </p>
               </div>
@@ -204,14 +204,14 @@ export default function SolutionCard({
 
              <div className="flex md:flex-row flex-col gap-4 ">
               {/* Full Code */}
-            <div className="md:w-1/2 bg-gray-100 p-4 rounded md:max-h-[500px] max-h-[300px] overflow-y-auto text-sm text-gray-500 whitespace-pre-wrap">
+            <div className="md:w-1/2 bg-gray-100 p-4 rounded md:max-h-[500px] max-h-[200px] overflow-y-auto md:text-sm text-xs text-gray-500 whitespace-pre-wrap">
               {codeSnippet}
             </div>
 
             {/* Description */}
             <div className="md:w-1/2 mt-4 md:max-h-[500px] max-h-[300px] overflow-y-auto text-gray-500">
-              <h3 className="text-lg font-semibold mb-2">Description</h3>
-              <p>{description}</p>
+              <h3 className="md:text-lg text-sm font-semibold mb-2">Description</h3>
+              <p className="md:text-sm text-xs">{description}</p>
             </div>
              </div>
           </div>

@@ -39,6 +39,7 @@ export default function UploadPage() {
   const [user, setUser] = useState<User | null>(null);
   const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -118,7 +119,7 @@ export default function UploadPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8 flex gap-5 justify-center">
+    <div className="flex md:flex-row flex-col min-h-screen bg-gray-100 pt-10 md:px-20 px-5 gap-5 justify-center">
       <div className="bg-white p-6 rounded-lg shadow-xl mb-8 w-full max-w-xl h-fit">
         <h2 className="text-xl font-semibold text-gray-600 mb-4">
           Why Contribute to Us? 🚀
@@ -142,18 +143,18 @@ export default function UploadPage() {
         </p>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-xl mb-8 w-fit h-fit">
+      <div className="bg-white p-6 rounded-lg shadow-xl mb-8 w-full h-full">
         <h1 className="text-xl font-bold mb-4 text-gray-600">Your Solution</h1>
 
-        <div className="grid gap-4 w-4xl">
-          <div className="flex gap-5 justify-between">
+        <div className="grid gap-4 md:w-4xl">
+          <div className="flex md:flex-row flex-col md:gap-5 justify-between">
           <label className="block capitalize mb-1 text-gray-600">Title</label>
             <input
               name="title"
               type="text"
               value={form.title}
               placeholder="Question Title"
-              className={`p-2 text-sm rounded bg-gray-100 w-2xl border ${
+              className={`p-2 text-sm rounded bg-gray-100 md:w-2xl border ${
                 errors.title ? "border-red-500" : "border-gray-700"
               }`}
               onChange={handleChange}
@@ -163,12 +164,12 @@ export default function UploadPage() {
             )}
           </div>
 
-          <div className="flex gap-5 justify-between">
+          <div className="flex md:flex-row flex-col md:gap-5 justify-between">
           <label className="block capitalize mb-1 text-gray-600">Platform</label>
           <select
               name="platform"
               value={form.platform}
-              className={`p-2 text-sm rounded bg-gray-100 w-2xl border cursor-pointer ${
+              className={`p-2 text-sm rounded bg-gray-100 md:w-2xl border cursor-pointer ${
                 errors.platform ? "border-red-500" : "border-gray-700"
               }`}
               onChange={handleChange}
@@ -191,14 +192,14 @@ export default function UploadPage() {
             )}
           </div>
 
-          <div className="flex gap-5 justify-between">
+          <div className="flex md:flex-row flex-col md:gap-5 justify-between">
           <label className="block capitalize mb-1 text-gray-600">Language</label>
           <input
               name="language"
               type="text"
               value={form.language}
               placeholder="Language (e.g. Python)"
-              className={`p-2 text-sm rounded bg-gray-100 w-2xl border ${
+              className={`p-2 text-sm rounded bg-gray-100 md:w-2xl border ${
                 errors.language ? "border-red-500" : "border-gray-700"
               }`}
               onChange={handleChange}
@@ -208,7 +209,7 @@ export default function UploadPage() {
             )}
           </div>
 
-          <div className="flex gap-5 justify-between">
+          <div className="flex md:flex-row flex-col md:gap-5 justify-between">
           <label className="block capitalize mb-1 text-gray-600">
             Code 
           </label>
@@ -216,7 +217,7 @@ export default function UploadPage() {
               name="codeSnippet"
               value={form.codeSnippet}
               placeholder="Paste your code here..."
-              className={`p-2 text-sm rounded bg-gray-100 w-2xl border ${
+              className={`p-2 text-sm rounded bg-gray-100 md:w-2xl border ${
                 errors.codeSnippet ? "border-red-500" : "border-gray-700"
               } h-40`}
               onChange={handleChange}
@@ -226,7 +227,7 @@ export default function UploadPage() {
             )}
           </div>
 
-          <div className="flex gap-5 justify-between">
+          <div className="flex md:flex-row flex-col md:gap-5 justify-between">
           <label className="block capitalize mb-1 text-gray-600">
               Description
             </label>
@@ -234,7 +235,7 @@ export default function UploadPage() {
               name="description"
               value={form.description}
               placeholder="Explain your solution (optional)"
-              className="p-2 text-sm rounded bg-gray-100 w-2xl border border-gray-700 h-45"
+              className="p-2 text-sm rounded bg-gray-100 md:w-2xl border border-gray-700 h-45"
               onChange={handleChange}
             />
           </div>
