@@ -1,5 +1,4 @@
 "use client";
-import Footer from "../../components/Footer";
 import ResourceCard from "@/components/ResourceCard";
 import TUF from "../../public/images/tuf.png";
 import Geeks from "../../public/images/geeksforgeeks.png";
