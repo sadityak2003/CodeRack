@@ -113,7 +113,7 @@ export default function EditSolutionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-200 p-8 flex gap-5 justify-center">
+    <div className="flex md:flex-row flex-col min-h-screen bg-gray-200 pt-10 md:px-20 px-5 gap-5 justify-center">
       <div className="bg-white p-6 rounded-lg shadow-xl mb-8 w-full max-w-xl h-fit">
         <h2 className="text-xl font-semibold text-gray-600 mb-4">
           A Good Description Helps Others Understand Your Code 🧠✨
@@ -139,20 +139,20 @@ export default function EditSolutionPage() {
         </p>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-xl mb-8 w-fit h-fit">
+      <div className="bg-white p-6 rounded-lg shadow-xl mb-8 w-full h-full">
         <h1 className="text-xl font-bold mb-6 text-gray-600">Edit Solution</h1>
 
         {/* First Column: Title, Platform, Language, Button, Description */}
-        <div className="grid gap-4 w-4xl">
+        <div className="grid gap-4 md:w-4xl">
           {/* Title */}
-          <div className=" flex gap-5 justify-between">
+          <div className="flex md:flex-row flex-col md:gap-5 justify-between">
             <label className="block capitalize mb-1 text-gray-600">Title</label>
             <input
               type="text"
               name="title"
               value={form.title}
               onChange={handleChange}
-              className="w-2xl text-sm p-2 border rounded bg-gray-100 border-gray-700"
+              className="md:w-2xl text-sm p-2 border rounded bg-gray-100 border-gray-700"
             />
             {errors.title && (
               <p className="text-red-500 text-sm">{errors.title}</p>
@@ -160,7 +160,7 @@ export default function EditSolutionPage() {
           </div>
 
           {/* Platform */}
-          <div className="flex gap-5 justify-between">
+          <div className="flex md:flex-row flex-col md:gap-5 justify-between">
             <label className="block capitalize mb-1 text-gray-600">
               Platform
             </label>
@@ -168,7 +168,7 @@ export default function EditSolutionPage() {
               name="platform"
               value={form.platform}
               onChange={handleChange}
-              className="w-2xl text-sm p-2 border rounded bg-gray-100 border-gray-700"
+              className="md:w-2xl text-sm p-2 border rounded bg-gray-100 border-gray-700"
             >
               <option value="">Select Platform</option>
               <option value="LeetCode">LeetCode</option>
@@ -181,7 +181,7 @@ export default function EditSolutionPage() {
           </div>
 
           {/* Language */}
-          <div className="flex gap-5 justify-between">
+          <div className="flex md:flex-row flex-col md:gap-5 justify-between">
             <label className="block capitalize mb-1 text-gray-600">
               Language
             </label>
@@ -190,7 +190,7 @@ export default function EditSolutionPage() {
               name="language"
               value={form.language}
               onChange={handleChange}
-              className="w-2xl text-sm p-2 border rounded bg-gray-100 border-gray-700"
+              className="md:w-2xl text-sm p-2 border rounded bg-gray-100 border-gray-700"
             />
             {errors.language && (
               <p className="text-red-500 text-sm">{errors.language}</p>
@@ -198,7 +198,7 @@ export default function EditSolutionPage() {
           </div>
 
           {/* Description */}
-          <div className="flex gap-5 justify-between">
+          <div className="flex md:flex-row flex-col md:gap-5 justify-between">
             <label className="block capitalize mb-1 text-gray-600">
               Description
             </label>
@@ -206,7 +206,7 @@ export default function EditSolutionPage() {
               name="description"
               value={form.description}
               onChange={handleChange}
-              className="w-2xl text-sm p-2 border rounded bg-gray-100 border-gray-700"
+              className="md:w-2xl text-sm p-2 border rounded bg-gray-100 border-gray-700"
               rows={12}
             />
             {errors.description && (
@@ -215,13 +215,13 @@ export default function EditSolutionPage() {
           </div>
 
           {/* Second Column: Code Snippet + Button */}
-          <div className="flex gap-5 justify-between">
+          <div className="flex md:flex-row flex-col md:gap-5 justify-between">
             <label className="block capitalize mb-1 text-gray-600">Code</label>
             <textarea
               name="codeSnippet"
               value={form.codeSnippet}
               onChange={handleChange}
-              className="w-2xl text-sm h-full p-2 border rounded bg-gray-100 border-gray-700"
+              className="md:w-2xl text-sm h-full p-2 border rounded bg-gray-100 border-gray-700"
               rows={12}
             />
             {errors.codeSnippet && (

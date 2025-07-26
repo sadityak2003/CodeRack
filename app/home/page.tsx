@@ -64,12 +64,12 @@ const Resources = {
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100 items-center justify-center mt-50 ml-30 mr-30 mb-30">
+    <div className="flex flex-col min-h-screen bg-gray-100 items-center justify-center md:pt-60 pt-30 md:px-20 px-5 pb-20 relative">
       <div className="flex flex-col items-center">
-          <h1 className="text-5xl font-bold mb-4 text-gray-700">
+          <h1 className="md:text-5xl text-2xl font-bold mb-4 text-gray-700">
             Welcome to Coding Geeks
           </h1>
-          <p className="text-lg mb-8 text-gray-500">
+          <p className="md:text-lg text-sm mb-8 text-gray-500">
             Your one-stop community for coding solutions!
           </p>
           <a
@@ -80,13 +80,13 @@ export default function HomePage() {
           </a>
         </div>
 
-        <div className="w-50 h-50 bg-amber-600 shadow transform rotate-35 absolute top-40 left-100 opacity-20 z-0">
+        <div className="md:w-50 md:h-50 w-20 h-20 bg-amber-600 shadow transform rotate-35 absolute md:top-40 md:left-100 top-25 left-10 opacity-20 z-0">
         </div>
         
 
         <div className="items-start mt-30">
-            <h2 className="text-2xl text-gray-600 font-semibold">Resources</h2>
-            <p className="text-md text-gray-500">Explore our curated resources to enhance your coding skills.</p>
+            <h2 className="md:text-2xl text-lg text-gray-600 font-semibold">Resources</h2>
+            <p className="md:text-md text-xs text-gray-500">Explore our curated resources to enhance your coding skills.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -141,11 +141,9 @@ export default function HomePage() {
             </div>
 
         <div className="flex flex-col items-center mt-30">
-          <h2 className="text-3xl font-semibold text-gray-600">Join Us Today!</h2>
-          <p className="text-md text-gray-500">Become a part of our vibrant community & help geeks with your solutions.</p>
+          <h2 className="md:text-3xl text-xl font-semibold text-gray-600">Join Us Today!</h2>
+          <p className="md:text-md text-xs text-center text-gray-500">Become a part of our vibrant community & help geeks with your solutions.</p>
         </div>
-
-        <Footer />
     </div>
   );
 } 

@@ -169,7 +169,7 @@ export default function SolutionCard({
       {/* MODAL VIEW */}
       {open && (
         <div className="flex fixed inset-0 bg-black/50 items-center justify-center z-50">
-          <div className="bg-white text-white max-w-7xl rounded-lg shadow-xl p-6 ml-5 mr-5 relative">
+          <div className="bg-white text-white max-w-7xl md:min-w-7xl w-full md:min-h-[500px] h-fit rounded-lg shadow-xl p-6 ml-5 mr-5 relative">
             <button
               onClick={() => setOpen(false)}
               className="absolute top-3 right-4 text-gray-400 hover:text-black text-xl cursor-pointer"

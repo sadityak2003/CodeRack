@@ -2,11 +2,11 @@
 
 export default function Footer() {
   return (
-    <footer className="bg-white text-white py-8 mt-10">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-        <div className="mb-4 md:mb-0">
-          <h3 className="text-xl font-bold text-gray-600">Coding Geeks</h3>
-          <p className="text-gray-400 text-sm">Empowering coders around the world 🌍</p>
+    <footer className="bg-white text-white md:px-20 md:py-20 py-5 w-full">
+      <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="mb-4 md:mb-2">
+          <h3 className="md:text-xl text-md font-bold text-gray-600">Coding Geeks</h3>
+          <p className="text-gray-400 md:text-sm text-xs">Empowering coders around the world 🌍</p>
         </div>
 
         <div className="flex space-x-6">
