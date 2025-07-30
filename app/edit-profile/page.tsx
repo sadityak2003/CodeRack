@@ -169,37 +169,37 @@ export default function EditProfilePage() {
             </p>
           </div>
           <div className="flex flex-col gap-2 w-full md:w-2/3">
-            <div className="flex gap-5 justify-between items-center">
+            <div className="flex md:flex-row flex-col md:gap-5 md:justify-between md:items-center">
               <label className="block capitalize mb-1 text-sm">Name</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-100 p-2 rounded border-b-1 text-gray-600"
+                className="md:w-100 p-2 rounded border-b-1 text-gray-600"
               />
             </div>
 
-            <div className="flex justify-between gap-5 items-center">
+            <div className="flex md:flex-row flex-col md:justify-between md:items-center md:gap-5">
               <label className="block mb-1 text-sm">Description</label>
               <input
                 type="text"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-100 p-2 rounded border-b-1 text-gray-600"
+                className="md:w-100 p-2 rounded border-b-1 text-gray-600"
               />
             </div>
 
-            <div className="flex justify-between gap-5 items-center">
+            <div className="flex md:flex-row flex-col md:justify-between md:gap-5 md:items-center">
               <label className="block mb-1 text-sm">LeetCode Profile</label>
               <input
                 type="text"
                 value={leetcode}
                 onChange={(e) => setLeetcode(e.target.value)}
-                className="w-100 p-2 rounded border-b-1 text-gray-600"
+                className="md:w-100 p-2 rounded border-b-1 text-gray-600"
               />
             </div>
 
-            <div className="flex justify-between gap-5 items-center">
+            <div className="flex md:flex-row flex-col md:justify-between md:gap-5 md:items-center">
               <label className="block mb-1 text-sm">
                 GFG Profile
               </label>
@@ -207,27 +207,27 @@ export default function EditProfilePage() {
                 type="text"
                 value={gfg}
                 onChange={(e) => setGFG(e.target.value)}
-                className="w-100 p-2 rounded border-b-1 text-gray-600"
+                className="md:w-100 p-2 rounded border-b-1 text-gray-600"
               />
             </div>
 
-            <div className="flex justify-between gap-5 items-center">
+            <div className="flex md:flex-row flex-col md:justify-between md:gap-5 md:items-center">
               <label className="block mb-1 text-sm">GitHub Profile</label>
               <input
                 type="text"
                 value={github}
                 onChange={(e) => setGitHub(e.target.value)}
-                className="w-100 p-2 rounded border-b-1 text-gray-600"
+                className="md:w-100 p-2 rounded border-b-1 text-gray-600"
               />
             </div>
 
-            <div className="flex justify-between gap-5 items-center">
+            <div className="flex md:flex-row flex-col md:justify-between md:gap-5 md:items-center">
               <label className="block mb-1 text-sm">LinkedIn Profile</label>
               <input
                 type="text"
                 value={linkedin}
                 onChange={(e) => setLinkedIn(e.target.value)}
-                className="w-100 p-2 rounded border-b-1 text-gray-600"
+                className="md:w-100 p-2 rounded border-b-1 text-gray-600"
               />
             </div>
 
