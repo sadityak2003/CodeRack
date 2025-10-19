@@ -98,6 +98,19 @@ export default function SolutionCard({
     setTimeout(() => setCopied(false), 5000);
   };
 
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`/api/solution/${_id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Failed to delete solution");
+      router.push("/profile"); // Redirect to profile page after deletion
+      router.refresh(); // Refresh the page after deletion
+    } catch (error) {
+      console.error("Error deleting solution:", error);
+    }
+  };
+
   const handleSendMessage = async () => {
     if (!chatInput.trim()) return;
 
@@ -441,24 +454,8 @@ Always respond in a conversational, structured way:
           </div>
         </div>
       )}
-    </>
-  );
-}
 
-/*    
-const handleDelete = async () => {
-    try {
-      const res = await fetch(`/api/solution/${_id}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Failed to delete solution");
-      router.push("/profile"); // Redirect to profile page after deletion
-      router.refresh(); // Refresh the page after deletion
-    } catch (error) {
-      console.error("Error deleting solution:", error);
-    }
-  };
-
+      
 {showDeleteModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full animate-in fade-in duration-300">
@@ -489,4 +486,7 @@ const handleDelete = async () => {
           </div>
         </div>
       )}
-*/
+    </>
+  );
+}
+
