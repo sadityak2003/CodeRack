@@ -390,12 +390,12 @@ Always respond in a conversational, structured way:
                               />
                             ),
                             code: (props) => { // Accept all props as a single object
-    const { inline, className, children } = props; // Destructure the properties you need
+    const { className, children } = props; // Destructure the properties you need
     
     // The rest of your existing logic remains the same
     const match = /language-(\w+)/.exec(className || "");
     
-    return !inline && match ? (
+    return  match ? (
         <SyntaxHighlighter
             language={match[1]}
             PreTag="div"
