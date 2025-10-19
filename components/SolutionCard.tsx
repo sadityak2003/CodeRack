@@ -389,28 +389,25 @@ Always respond in a conversational, structured way:
                                 {...props}
                               />
                             ),
-                            code: ({
-                              inline,
-                              className,
-                              children,
-                            }) => {
-                              const match = /language-(\w+)/.exec(
-                                className || ""
-                              );
-                              return !inline && match ? (
-                                <SyntaxHighlighter
-                                  language={match[1]}
-                                  PreTag="div"
-                                  className="rounded-lg"
-                                >
-                                  {String(children).replace(/\n$/, "")}
-                                </SyntaxHighlighter>
-                              ) : (
-                                <code className="bg-gray-100 text-pink-600 px-1 py-0.5 rounded text-sm">
-                                  {children}
-                                </code>
-                              );
-                            },
+                            code: (props) => { // Accept all props as a single object
+    const { inline, className, children } = props; // Destructure the properties you need
+    
+    // The rest of your existing logic remains the same
+    const match = /language-(\w+)/.exec(className || "");
+    
+    return !inline && match ? (
+        <SyntaxHighlighter
+            language={match[1]}
+            PreTag="div"
+            className="rounded-lg"
+        >
+            {String(children).replace(/\n$/, "")}
+        </SyntaxHighlighter>
+    ) : (
+        <code className="bg-gray-100 text-pink-600 px-1 py-0.5 rounded text-sm">
+            {children}
+        </code>
+    );},
                           }}
                         >
                           {msg.text}
