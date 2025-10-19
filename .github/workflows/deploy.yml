@@ -3,7 +3,7 @@ name: Deploy to Cloud Run
 on:
   push:
     branches:
-      - main
+      - main        #deploy.yml
 
 jobs:
   build-and-deploy:
@@ -20,10 +20,9 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
-      - name: Authenticate Docker to GCR
+      - name: Configure Docker for GCR
         run: |
-          echo "${{ secrets.GCP_SA_KEY }}" > /tmp/key.json
-          cat /tmp/key.json | docker login -u _json_key --password-stdin https://gcr.io
+          gcloud auth configure-docker
 
       - name: Build Docker image
         run: |
