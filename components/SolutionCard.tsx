@@ -383,18 +383,13 @@ Always respond in a conversational, structured way:
                           remarkPlugins={[remarkGfm, remarkMath]}
                           rehypePlugins={[rehypeKatex]}
                           components={{
-                            p: ({ node, ...props }) => (
+                            p: ({...props }) => (
                               <p
                                 className="prose prose-sm max-w-none text-gray-700"
                                 {...props}
                               />
                             ),
-                            code: ({
-                              inline,
-                              className,
-                              children,
-                              ...props
-                            }) => {
+                            code: ({ inline, className, children, ...props }: any) => {
                               const match = /language-(\w+)/.exec(
                                 className || ""
                               );
@@ -407,7 +402,7 @@ Always respond in a conversational, structured way:
                                   {String(children).replace(/\n$/, "")}
                                 </SyntaxHighlighter>
                               ) : (
-                                <code className="bg-gray-100 text-pink-600 px-1 py-0.5 rounded text-sm">
+                                <code {...props} className="bg-gray-100 text-pink-600 px-1 py-0.5 rounded text-sm">
                                   {children}
                                 </code>
                               );
