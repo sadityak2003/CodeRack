@@ -389,7 +389,11 @@ Always respond in a conversational, structured way:
                                 {...props}
                               />
                             ),
-                            code: ({ inline, className, children, ...props }: any) => {
+                            code: ({
+                              inline,
+                              className,
+                              children,
+                            }) => {
                               const match = /language-(\w+)/.exec(
                                 className || ""
                               );
@@ -402,7 +406,7 @@ Always respond in a conversational, structured way:
                                   {String(children).replace(/\n$/, "")}
                                 </SyntaxHighlighter>
                               ) : (
-                                <code {...props} className="bg-gray-100 text-pink-600 px-1 py-0.5 rounded text-sm">
+                                <code className="bg-gray-100 text-pink-600 px-1 py-0.5 rounded text-sm">
                                   {children}
                                 </code>
                               );
