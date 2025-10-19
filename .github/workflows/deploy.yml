@@ -1,0 +1,38 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main  # Run on pushes to main branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: codinggeeks-app-1234
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Build Docker image
+        run: |
+          docker build -t gcr.io/codinggeeks-app-1234/codinggeeks-app:latest .
+
+      - name: Push Docker image to GCR
+        run: |
+          docker push gcr.io/codinggeeks-app-1234/codinggeeks-app:latest
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy codinggeeks-app \
+            --image gcr.io/codinggeeks-app-1234/codinggeeks-app:latest \
+            --platform managed \
+            --region asia-south1 \
+            --allow-unauthenticated \
+            --set-env-vars MONGODB_URI="${{ secrets.MONGODB_URI }}"
